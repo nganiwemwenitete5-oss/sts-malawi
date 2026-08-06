@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STS Malawi - Student Booking</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f4f7fb;
+    margin:0;
+}
+
+header{
+    background:#0b5ed7;
+    color:white;
+    padding:20px;
+    text-align:center;
+}
+
+.container{
+    max-width:700px;
+    margin:30px auto;
+    background:white;
+    padding:25px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.15);
+}
+
+input,select,textarea{
+    width:100%;
+    padding:12px;
+    margin:8px 0;
+    border:1px solid #ccc;
+    border-radius:6px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    background:#0b5ed7;
+    color:white;
+    padding:15px;
+    border:none;
+    border-radius:6px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#084298;
+}
+
+h2{
+    color:#0b5ed7;
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+<h1>STS Malawi</h1>
+<p>Student Transport Booking</p>
+</header>
+
+<div class="container">
+
+<h2>Book Student Transport</h2>
+
+<form id="bookingForm">
+
+<input type="text" id="studentName" placeholder="Student Name" required>
+
+<input type="text" id="school" placeholder="School Name" required>
+
+<input type="text" id="grade" placeholder="Grade / Class" required>
+
+<input type="text" id="parentName" placeholder="Parent / Guardian Name" required>
+
+<input type="tel" id="phone" placeholder="Phone Number" required>
+
+<input type="email" id="email" placeholder="Email Address">
+
+<input type="text" id="pickup" placeholder="Pickup Location" required>
+
+<input type="text" id="destination" placeholder="Destination" required>
+
+<select id="district">
+<option value="">Select District</option>
+<option>Lilongwe</option>
+<option>Blantyre</option>
+<option>Mzuzu</option>
+<option>Zomba</option>
+<option>Kasungu</option>
+<option>Salima</option>
+<option>Mangochi</option>
+<option>Mzimba</option>
+<option>Nkhotakota</option>
+<option>Karonga</option>
+<option>Balaka</option>
+<option>Dedza</option>
+<option>Dowa</option>
+<option>Ntcheu</option>
+<option>Ntchisi</option>
+<option>Rumphi</option>
+<option>Chitipa</option>
+<option>Nkhata Bay</option>
+<option>
