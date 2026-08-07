@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
 <title>STS Malawi - Admin Dashboard</title>
 
 <style>
+
 body {
     font-family: Arial, sans-serif;
     background: #f4f7fb;
@@ -51,7 +53,7 @@ button {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 th, td {
@@ -64,76 +66,86 @@ th {
     background: #f0f3f7;
 }
 
-.status {
-    padding: 6px 10px;
-    border-radius: 5px;
-    background: #fff3cd;
-}
-
 #message {
     margin: 15px 0;
+    padding: 10px;
     font-weight: bold;
 }
+
 </style>
 </head>
 
 <body>
 
 <header>
-    <button class="logout" id="logoutBtn">Logout</button>
-    <h1>STS Malawi</h1>
-    <p>Administrator Dashboard</p>
+
+<button class="logout" id="logoutBtn">
+Logout
+</button>
+
+<h1>STS Malawi</h1>
+
+<p>Administrator Dashboard</p>
+
 </header>
+
 
 <div class="container">
 
-    <div class="card">
+<div class="card">
 
-        <h2>Student Transport Bookings</h2>
+<h2>Student Transport Bookings</h2>
 
-        <div id="message">Loading bookings...</div>
+<div id="message">
+Connecting to Firebase...
+</div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Student</th>
-                    <th>School</th>
-                    <th>Grade</th>
-                    <th>Parent</th>
-                    <th>Phone</th>
-                    <th>Pickup</th>
-                    <th>Destination</th>
-                    <th>Status</th>
-                </tr>
-            </thead>
 
-            <tbody id="bookingTable">
-            </tbody>
+<table>
 
-        </table>
+<thead>
 
-    </div>
+<tr>
+<th>Student</th>
+<th>School</th>
+<th>Grade</th>
+<th>Parent</th>
+<th>Phone</th>
+<th>Pickup</th>
+<th>Destination</th>
+<th>Status</th>
+</tr>
+
+</thead>
+
+<tbody id="bookingTable"></tbody>
+
+</table>
 
 </div>
 
+</div>
+
+
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
-
 import {
-    getFirestore,
-    collection,
-    getDocs
-}
-from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
 
 import {
     getAuth,
     onAuthStateChanged,
     signOut
-}
-from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+
+import {
+    getFirestore,
+    collection,
+    getDocs
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -157,104 +169,114 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-const db = getFirestore(app);
-
 const auth = getAuth(app);
 
+const db = getFirestore(app);
 
-const table = document.getElementById("bookingTable");
 
-const message = document.getElementById("message");
+const message =
+document.getElementById("message");
+
+const table =
+document.getElementById("bookingTable");
 
 
 onAuthStateChanged(auth, async (user) => {
 
     if (!user) {
 
-        window.location.href = "login.html";
+        message.textContent =
+        "You are not logged in. Please log in again.";
 
         return;
-
     }
 
-    loadBookings();
 
-});
+    message.textContent =
+    "Logged in. Loading bookings...";
 
-
-async function loadBookings() {
 
     try {
 
-        const snapshot = await getDocs(
+        const snapshot =
+        await getDocs(
             collection(db, "bookings")
         );
 
+
         table.innerHTML = "";
+
 
         if (snapshot.empty) {
 
-            message.textContent = "No bookings yet.";
+            message.textContent =
+            "No bookings found.";
 
             return;
-
         }
 
+
         message.textContent =
-            snapshot.size + " booking(s) found.";
+        snapshot.size +
+        " booking(s) found.";
+
 
         snapshot.forEach((doc) => {
 
             const data = doc.data();
 
-            const row = document.createElement("tr");
+            const row =
+            document.createElement("tr");
+
 
             row.innerHTML = `
 
-                <td>${data.studentName || ""}</td>
+            <td>${data.studentName || ""}</td>
 
-                <td>${data.school || ""}</td>
+            <td>${data.school || ""}</td>
 
-                <td>${data.grade || ""}</td>
+            <td>${data.grade || ""}</td>
 
-                <td>${data.parentName || data["Parent Name"] || ""}</td>
+            <td>${data.parentName || ""}</td>
 
-                <td>${data.phone || ""}</td>
+            <td>${data.phone || ""}</td>
 
-                <td>${data.pickup || ""}</td>
+            <td>${data.pickup || ""}</td>
 
-                <td>${data.destination || ""}</td>
+            <td>${data.destination || ""}</td>
 
-                <td>
-                    <span class="status">
-                        ${data.status || data.Status || "Pending"}
-                    </span>
-                </td>
+            <td>${data.status || "Pending"}</td>
 
             `;
+
 
             table.appendChild(row);
 
         });
 
+
     } catch (error) {
 
         console.error(error);
 
-        message.textContent =
-            "Error loading bookings: " + error.message;
+
+        message.innerHTML =
+        "Firebase error: " +
+        error.message;
 
     }
 
-}
+});
 
 
-document.getElementById("logoutBtn")
+document
+.getElementById("logoutBtn")
 .addEventListener("click", async () => {
 
     await signOut(auth);
 
-    window.location.href = "login.html";
+    window.location.href =
+    "login.html";
 
 });
 
