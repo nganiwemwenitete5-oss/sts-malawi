@@ -221,39 +221,35 @@ onAuthStateChanged(auth, async (user) => {
         " booking(s) found.";
 
 
-        snapshot.forEach((doc) => {
+       snapshot.forEach((doc) => {
 
-            const data = doc.data();
+    const data = doc.data();
 
-            const row =
-            document.createElement("tr");
+    const row = document.createElement("tr");
 
+    row.innerHTML = `
 
-            row.innerHTML = `
+    <td>${data["Student Name"] || data.studentName || ""}</td>
 
-            <td>${data.studentName || ""}</td>
+    <td>${data["School"] || data.school || ""}</td>
 
-            <td>${data.school || ""}</td>
+    <td>${data["Grade"] || data.grade || ""}</td>
 
-            <td>${data.grade || ""}</td>
+    <td>${data["Parent Name"] || data.parentName || ""}</td>
 
-            <td>${data.parentName || ""}</td>
+    <td>${data["Phone"] || data.phone || ""}</td>
 
-            <td>${data.phone || ""}</td>
+    <td>${data["Pickup"] || data.pickup || ""}</td>
 
-            <td>${data.pickup || ""}</td>
+    <td>${data["Destination"] || data.destination || ""}</td>
 
-            <td>${data.destination || ""}</td>
+    <td>${data["Status"] || data.status || "Pending"}</td>
 
-            <td>${data.status || "Pending"}</td>
+    `;
 
-            `;
+    table.appendChild(row);
 
-
-            table.appendChild(row);
-
-        });
-
+});
 
     } catch (error) {
 
