@@ -1,99 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>STS Malawi - Student Booking</title>
 
 <style>
-* {
-    box-sizing: border-box;
-}
-
-body {
-    font-family: Arial, sans-serif;
-    background: #f4f7fb;
-    margin: 0;
-    color: #222;
-}
-
-header {
-    background: #0b5ed7;
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-.container {
-    max-width: 700px;
-    margin: 30px auto;
-    background: white;
-    padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,.15);
-}
-
-input,
-select,
-textarea {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-}
-
-button {
-    width: 100%;
-    background: #0b5ed7;
-    color: white;
-    padding: 15px;
-    border: 0;
-    border-radius: 6px;
-    font-size: 16px;
-    cursor: pointer;
-}
-
-button:disabled {
-    background: #8aaee8;
-}
-
-.small {
-    font-size: 13px;
-    color: #666;
-}
-
-#message {
-    margin-top: 15px;
-    padding: 12px;
-    border-radius: 6px;
-    display: none;
-}
-
-.success {
-    background: #d1e7dd;
-    color: #0f5132;
-}
-
-.error {
-    background: #f8d7da;
-    color: #842029;
-}
-
-.info {
-    background: #cff4fc;
-    color: #055160;
-}
+*{box-sizing:border-box}
+body{font-family:Arial,sans-serif;background:#f4f7fb;margin:0;color:#222}
+header{background:#0b5ed7;color:white;padding:20px;text-align:center}
+.container{max-width:700px;margin:30px auto;background:white;padding:25px;border-radius:10px;box-shadow:0 0 10px rgba(0,0,0,.15)}
+input,select,textarea{width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:6px}
+button{width:100%;background:#0b5ed7;color:white;padding:15px;border:0;border-radius:6px;font-size:16px;cursor:pointer}
+button:disabled{background:#8aaee8}
+.small{font-size:13px;color:#666}
+#message{margin-top:15px;padding:12px;border-radius:6px;display:none}
+.success{background:#d1e7dd;color:#0f5132}
+.error{background:#f8d7da;color:#842029}
+.info{background:#cff4fc;color:#055160}
 </style>
 </head>
 
 <body>
 
 <header>
-    <h1>STS Malawi</h1>
-    <p>Student Transport Booking</p>
+<h1>STS Malawi</h1>
+<p>Student Transport Booking</p>
 </header>
 
 <div class="container">
@@ -106,59 +38,24 @@ Complete the form below. Your booking will be sent securely to STS Malawi.
 
 <form id="bookingForm">
 
-<input
-    id="studentName"
-    placeholder="Student Name"
-    required
->
+<input id="studentName" placeholder="Student Name" required>
 
-<input
-    id="school"
-    placeholder="School Name"
-    required
->
+<input id="school" placeholder="School Name" required>
 
-<input
-    id="grade"
-    placeholder="Grade / Class"
-    required
->
+<input id="grade" placeholder="Grade / Class" required>
 
-<input
-    id="parentName"
-    placeholder="Parent / Guardian Name"
-    required
->
+<input id="parentName" placeholder="Parent / Guardian Name" required>
 
-<input
-    type="tel"
-    id="phone"
-    placeholder="Phone Number"
-    required
->
+<input type="tel" id="phone" placeholder="Phone Number" required>
 
-<input
-    type="email"
-    id="email"
-    placeholder="Email Address"
->
+<input type="email" id="email" placeholder="Email Address">
 
-<input
-    id="pickup"
-    placeholder="Pickup Location"
-    required
->
+<input id="pickup" placeholder="Pickup Location" required>
 
-<input
-    id="destination"
-    placeholder="Destination"
-    required
->
+<input id="destination" placeholder="Destination" required>
 
 <select id="district" required>
-
 <option value="">Select District</option>
-
 <option>Balaka</option>
 <option>Blantyre</option>
 <option>Chikwawa</option>
@@ -187,32 +84,29 @@ Complete the form below. Your booking will be sent securely to STS Malawi.
 <option>Salima</option>
 <option>Thyolo</option>
 <option>Zomba</option>
-
 </select>
 
-<textarea
-    id="notes"
-    rows="4"
-    placeholder="Additional information (optional)"
-></textarea>
+<textarea id="notes" rows="4" placeholder="Additional information (optional)"></textarea>
 
-<button
-    type="submit"
-    id="submitBtn"
->
+<button type="submit" id="submitBtn">
 Submit Booking
 </button>
 
 <div id="message"></div>
 
 </form>
-
 </div>
-
 
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+
+import {
+    getAuth,
+    signInAnonymously
+}
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 import {
     initializeFirestore,
@@ -220,12 +114,7 @@ import {
     addDoc,
     serverTimestamp
 }
-import {
-    initializeFirestore,
-    collection,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 
 const firebaseConfig = {
@@ -240,13 +129,24 @@ const firebaseConfig = {
 
 
 const app = initializeApp(firebaseConfig);
+
 const auth = getAuth(app);
+
 const db = initializeFirestore(app, {
     experimentalForceLongPolling: true
 });
+
+
 const form = document.getElementById("bookingForm");
 const button = document.getElementById("submitBtn");
 const message = document.getElementById("message");
+
+
+function showMessage(text, type) {
+    message.textContent = text;
+    message.className = type;
+    message.style.display = "block";
+}
 
 
 form.addEventListener("submit", async (e) => {
@@ -256,81 +156,53 @@ form.addEventListener("submit", async (e) => {
     button.disabled = true;
     button.textContent = "Submitting...";
 
-    message.style.display = "block";
-    message.textContent = "Saving your booking...";
-    message.className = "";
-
+    showMessage("Connecting to Firebase...", "info");
 
     try {
 
-        // Sign in anonymously
         if (!auth.currentUser) {
             await signInAnonymously(auth);
         }
 
+        showMessage("Saving your booking...", "info");
 
         const booking = {
-
             studentName: document.getElementById("studentName").value.trim(),
-
             school: document.getElementById("school").value.trim(),
-
             grade: document.getElementById("grade").value.trim(),
-
             parentName: document.getElementById("parentName").value.trim(),
-
             phone: document.getElementById("phone").value.trim(),
-
             email: document.getElementById("email").value.trim(),
-
             pickup: document.getElementById("pickup").value.trim(),
-
             destination: document.getElementById("destination").value.trim(),
-
             district: document.getElementById("district").value,
-
             notes: document.getElementById("notes").value.trim(),
-
             status: "Pending",
-
             createdAt: serverTimestamp()
-
         };
 
-
-        const savePromise = addDoc(
-    collection(db, "bookings"),
-    booking
-);
-
-const timeoutPromise = new Promise((_, reject) =>
-    setTimeout(() => reject(new Error("Firestore write timed out after 10 seconds")), 10000)
-);
-
-const docRef = await Promise.race([
-    savePromise,
-    timeoutPromise
-]);
-
+        const docRef = await addDoc(
+            collection(db, "bookings"),
+            booking
+        );
 
         console.log("BOOKING SAVED:", docRef.id);
 
-        message.textContent =
-            "Booking submitted successfully!";
-
-        message.className = "success";
+        showMessage(
+            "Booking submitted successfully!",
+            "success"
+        );
 
         form.reset();
-
 
     } catch (error) {
 
         console.error("FIREBASE BOOKING ERROR:", error);
 
-        message.textContent =
-            "Firebase error: " + error.message;
-
-        message.className = "error";
+        showMessage(
+            "Firebase error: " + error.code + " - " + error.message,
+            "error"
+        );
 
     } finally {
 
