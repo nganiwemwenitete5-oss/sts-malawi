@@ -212,158 +212,89 @@ Submit Booking
 
 <script type="module">
 
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
 import {
     getAuth,
     signInAnonymously
-}
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 import {
     getFirestore,
     collection,
     addDoc,
     serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 
 const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyApfHHFX91RMVeQV-gb2xuutZ828Z-emeI",
-
-    authDomain:
-        "student-transport-services.firebaseapp.com",
-
-    projectId:
-        "student-transport-services",
-
-    storageBucket:
-        "student-transport-services.firebasestorage.app",
-
-    messagingSenderId:
-        "723755585577",
-
-    appId:
-        "1:723755585577:web:8428a99cfd50d1586b0c38",
-
-    measurementId:
-        "G-1R7Q3GGH0K"
+    apiKey: "AIzaSyApfHHFX91RMVeQV-gb2xuutZ828Z-emeI",
+    authDomain: "student-transport-services.firebaseapp.com",
+    projectId: "student-transport-services",
+    storageBucket: "student-transport-services.firebasestorage.app",
+    messagingSenderId: "723755585577",
+    appId: "1:723755585577:web:8428a99cfd50d1586b0c38",
+    measurementId: "G-1R7Q3GGH0K"
 };
 
 
 const app = initializeApp(firebaseConfig);
-
 const auth = getAuth(app);
-
 const db = getFirestore(app);
 
-
-const form =
-    document.getElementById("bookingForm");
-
-const button =
-    document.getElementById("submitBtn");
-
-const message =
-    document.getElementById("message");
+const form = document.getElementById("bookingForm");
+const button = document.getElementById("submitBtn");
+const message = document.getElementById("message");
 
 
-function showMessage(text, type) {
+form.addEventListener("submit", async (e) => {
 
-    message.textContent = text;
-
-    message.className = type;
-
-    message.style.display = "block";
-}
-
-
-form.addEventListener("submit", async function(event) {
-
-    event.preventDefault();
+    e.preventDefault();
 
     button.disabled = true;
-
     button.textContent = "Submitting...";
+
+    message.style.display = "block";
+    message.textContent = "Saving your booking...";
+    message.className = "";
 
 
     try {
 
-        showMessage(
-            "Connecting to STS Malawi...",
-            "info"
-        );
-
-
-        /*
-         * Authenticate anonymously
-         */
-
+        // Sign in anonymously
         if (!auth.currentUser) {
-
             await signInAnonymously(auth);
-
         }
 
 
-        showMessage(
-            "Saving your booking...",
-            "info"
-        );
-
-
-        /*
-         * Create booking
-         */
-
         const booking = {
 
-            studentName:
-                document.getElementById("studentName").value.trim(),
+            studentName: document.getElementById("studentName").value.trim(),
 
-            school:
-                document.getElementById("school").value.trim(),
+            school: document.getElementById("school").value.trim(),
 
-            grade:
-                document.getElementById("grade").value.trim(),
+            grade: document.getElementById("grade").value.trim(),
 
-            parentName:
-                document.getElementById("parentName").value.trim(),
+            parentName: document.getElementById("parentName").value.trim(),
 
-            phone:
-                document.getElementById("phone").value.trim(),
+            phone: document.getElementById("phone").value.trim(),
 
-            email:
-                document.getElementById("email").value.trim(),
+            email: document.getElementById("email").value.trim(),
 
-            pickup:
-                document.getElementById("pickup").value.trim(),
+            pickup: document.getElementById("pickup").value.trim(),
 
-            destination:
-                document.getElementById("destination").value.trim(),
+            destination: document.getElementById("destination").value.trim(),
 
-            district:
-                document.getElementById("district").value,
+            district: document.getElementById("district").value,
 
-            notes:
-                document.getElementById("notes").value.trim(),
+            notes: document.getElementById("notes").value.trim(),
 
-            status:
-                "Pending",
+            status: "Pending",
 
-            createdAt:
-                serverTimestamp()
+            createdAt: serverTimestamp()
 
         };
 
-
-        /*
-         * Save to the LOWERCASE bookings collection
-         */
 
         const docRef = await addDoc(
             collection(db, "bookings"),
@@ -371,46 +302,28 @@ form.addEventListener("submit", async function(event) {
         );
 
 
-        console.log(
-            "Booking successfully created:",
-            docRef.id
-        );
+        console.log("BOOKING SAVED:", docRef.id);
 
+        message.textContent =
+            "Booking submitted successfully!";
 
-        showMessage(
-            "Booking submitted successfully! STS Malawi will contact you.",
-            "success"
-        );
-
+        message.className = "success";
 
         form.reset();
 
 
     } catch (error) {
 
-        console.error(
-            "STS FIREBASE ERROR:",
-            error
-        );
+        console.error("FIREBASE BOOKING ERROR:", error);
 
+        message.textContent =
+            "Firebase error: " + error.message;
 
-        /*
-         * Show the REAL error on the screen
-         */
-
-        showMessage(
-            "Booking failed: " +
-            error.code +
-            " - " +
-            error.message,
-            "error"
-        );
-
+        message.className = "error";
 
     } finally {
 
         button.disabled = false;
-
         button.textContent = "Submit Booking";
 
     }
