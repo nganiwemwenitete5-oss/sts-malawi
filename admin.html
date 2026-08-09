@@ -203,7 +203,8 @@ onAuthStateChanged(auth, async (user) => {
             collection(db, "bookings")
         );
 
-
+console.log("Firebase project:", app.options.projectId);
+console.log("Bookings found:", snapshot.size);
         table.innerHTML = "";
 
 
