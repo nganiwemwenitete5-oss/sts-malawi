@@ -240,7 +240,9 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-const db = getFirestore(app);
+const db = initializeFirestore(app, {
+    experimentalAutoDetectLongPolling: true
+});
 
 const form = document.getElementById("bookingForm");
 const button = document.getElementById("submitBtn");
