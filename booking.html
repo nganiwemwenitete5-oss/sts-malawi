@@ -44,60 +44,156 @@ button:disabled{background:#8aaee8}.small{font-size:13px;color:#666}#message{mar
 </div>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
-const firebaseConfig={
-apiKey:"AIzaSyApfHHFX91RMVeQV-gb2xuutZ828Z-emeI",
-authDomain:"student-transport-services.firebaseapp.com",
-projectId:"student-transport-services",
-storageBucket:"student-transport-services.firebasestorage.app",
-messagingSenderId:"723755585577",
-appId:"1:723755585577:web:8428a99cfd50d1586b0c38",
-measurementId:"G-1R7Q3GGH0K"
+import {
+    getAuth,
+    signInAnonymously
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
+
+const firebaseConfig = {
+
+    apiKey: "AIzaSyApfHHFX91RMVeQV-gb2xuutZ828Z-emeI",
+
+    authDomain: "student-transport-services.firebaseapp.com",
+
+    projectId: "student-transport-services",
+
+    storageBucket: "student-transport-services.firebasestorage.app",
+
+    messagingSenderId: "723755585577",
+
+    appId: "1:723755585577:web:8428a99cfd50d1586b0c38",
+
+    measurementId: "G-1R7Q3GGH0K"
 };
 
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
-const form=document.getElementById("bookingForm");
-const button=document.getElementById("submitBtn");
-const message=document.getElementById("message");
 
-function showMessage(text,type){
-message.textContent=text;message.className=type;message.style.display="block";
-}
+const app = initializeApp(firebaseConfig);
 
-form.addEventListener("submit",async(e)=>{
-e.preventDefault();
-button.disabled=true;button.textContent="Submitting...";
-try{
-if(!auth.currentUser) await signInAnonymously(auth);
-const booking={
-studentName:studentName.value.trim(),
-school:school.value.trim(),
-grade:grade.value.trim(),
-parentName:parentName.value.trim(),
-phone:phone.value.trim(),
-email:email.value.trim(),
-pickup:pickup.value.trim(),
-destination:destination.value.trim(),
-district:district.value,
-notes:notes.value.trim(),
-status:"Pending",
-createdAt:serverTimestamp()
-};
-await addDoc(collection(db,"bookings"),booking);
-showMessage("Booking submitted successfully. STS Malawi will contact you.","success");
-form.reset();
-}catch(error){
-console.error(error);
-showMessage("Booking could not be submitted. Please try again.","error");
-}finally{
-button.disabled=false;button.textContent="Submit Booking";
-}
+const auth = getAuth(app);
+
+const db = getFirestore(app);
+
+
+const form = document.getElementById("bookingForm");
+
+const button = document.getElementById("submitBtn");
+
+const message = document.getElementById("message");
+
+
+const studentName = document.getElementById("studentName");
+
+const school = document.getElementById("school");
+
+const grade = document.getElementById("grade");
+
+const parentName = document.getElementById("parentName");
+
+const phone = document.getElementById("phone");
+
+const email = document.getElementById("email");
+
+const pickup = document.getElementById("pickup");
+
+const destination = document.getElementById("destination");
+
+const district = document.getElementById("district");
+
+const notes = document.getElementById("notes");
+
+
+form.addEventListener("submit", async (e) => {
+
+    e.preventDefault();
+
+    button.disabled = true;
+
+    button.textContent = "Submitting...";
+
+    message.textContent = "Connecting to Firebase...";
+
+
+    try {
+
+        // Sign in anonymously
+        if (!auth.currentUser) {
+            await signInAnonymously(auth);
+        }
+
+
+        message.textContent = "Saving booking...";
+
+
+        const booking = {
+
+            studentName: studentName.value.trim(),
+
+            school: school.value.trim(),
+
+            grade: grade.value.trim(),
+
+            parentName: parentName.value.trim(),
+
+            phone: phone.value.trim(),
+
+            email: email.value.trim(),
+
+            pickup: pickup.value.trim(),
+
+            destination: destination.value.trim(),
+
+            district: district.value,
+
+            notes: notes.value.trim(),
+
+            status: "Pending",
+
+            createdAt: serverTimestamp()
+
+        };
+
+
+        await addDoc(
+            collection(db, "bookings"),
+            booking
+        );
+
+
+        message.textContent =
+            "Booking submitted successfully! STS Malawi will contact you.";
+
+
+        form.reset();
+
+
+    } catch (error) {
+
+        console.error("Booking error:", error);
+
+        message.textContent =
+            "Booking failed: " + error.message;
+
+    } finally {
+
+        button.disabled = false;
+
+        button.textContent = "Submit Booking";
+
+    }
+
 });
+
 </script>
 </body>
 </html>
