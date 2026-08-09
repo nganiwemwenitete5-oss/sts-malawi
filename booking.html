@@ -296,10 +296,19 @@ form.addEventListener("submit", async (e) => {
         };
 
 
-        const docRef = await addDoc(
-            collection(db, "bookings"),
-            booking
-        );
+        const savePromise = addDoc(
+    collection(db, "bookings"),
+    booking
+);
+
+const timeoutPromise = new Promise((_, reject) =>
+    setTimeout(() => reject(new Error("Firestore write timed out after 10 seconds")), 10000)
+);
+
+const docRef = await Promise.race([
+    savePromise,
+    timeoutPromise
+]);
 
 
         console.log("BOOKING SAVED:", docRef.id);
