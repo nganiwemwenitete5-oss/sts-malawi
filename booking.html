@@ -126,65 +126,56 @@ form.addEventListener("submit", async (e) => {
 
     try {
 
-        // Sign in anonymously
-        if (!auth.currentUser) {
-            await signInAnonymously(auth);
-        }
+    message.textContent = "Step 1: Connecting to Firebase...";
 
+    if (!auth.currentUser) {
+        message.textContent = "Step 2: Signing in anonymously...";
 
-        message.textContent = "Saving booking...";
+        await signInAnonymously(auth);
+    }
 
+    message.textContent = "Step 3: Preparing booking...";
 
-        const booking = {
+    const booking = {
+        studentName: studentName.value.trim(),
+        school: school.value.trim(),
+        grade: grade.value.trim(),
+        parentName: parentName.value.trim(),
+        phone: phone.value.trim(),
+        email: email.value.trim(),
+        pickup: pickup.value.trim(),
+        destination: destination.value.trim(),
+        district: district.value,
+        notes: notes.value.trim(),
+        status: "Pending",
+        createdAt: serverTimestamp()
+    };
 
-            studentName: studentName.value.trim(),
+    message.textContent = "Step 4: Saving to Firestore...";
 
-            school: school.value.trim(),
+    await addDoc(
+        collection(db, "bookings"),
+        booking
+    );
 
-            grade: grade.value.trim(),
+    message.textContent =
+        "SUCCESS! Booking saved.";
 
-            parentName: parentName.value.trim(),
+    form.reset();
 
-            phone: phone.value.trim(),
+} catch (error) {
 
-            email: email.value.trim(),
+    console.error(error);
 
-            pickup: pickup.value.trim(),
+    message.textContent =
+        "ERROR: " + error.code + " - " + error.message;
 
-            destination: destination.value.trim(),
+} finally {
 
-            district: district.value,
+    button.disabled = false;
+    button.textContent = "Submit Booking";
 
-            notes: notes.value.trim(),
-
-            status: "Pending",
-
-            createdAt: serverTimestamp()
-
-        };
-
-
-        await addDoc(
-            collection(db, "bookings"),
-            booking
-        );
-
-
-        message.textContent =
-            "Booking submitted successfully! STS Malawi will contact you.";
-
-
-        form.reset();
-
-
-    } catch (error) {
-
-        console.error("Booking error:", error);
-
-        message.textContent =
-            "Booking failed: " + error.message;
-
-    } finally {
+}
 
         button.disabled = false;
 
