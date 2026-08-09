@@ -42,38 +42,33 @@ button:disabled{background:#8aaee8}.small{font-size:13px;color:#666}#message{mar
 <div id="message"></div>
 </form>
 </div>
-
 <script type="module">
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
 import {
     getAuth,
     signInAnonymously
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+}
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
 
 import {
     getFirestore,
     collection,
     addDoc,
     serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+}
+from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
 
 
 const firebaseConfig = {
-
     apiKey: "AIzaSyApfHHFX91RMVeQV-gb2xuutZ828Z-emeI",
-
     authDomain: "student-transport-services.firebaseapp.com",
-
     projectId: "student-transport-services",
-
     storageBucket: "student-transport-services.firebasestorage.app",
-
     messagingSenderId: "723755585577",
-
     appId: "1:723755585577:web:8428a99cfd50d1586b0c38",
-
     measurementId: "G-1R7Q3GGH0K"
 };
 
@@ -84,33 +79,11 @@ const auth = getAuth(app);
 
 const db = getFirestore(app);
 
-
 const form = document.getElementById("bookingForm");
 
 const button = document.getElementById("submitBtn");
 
 const message = document.getElementById("message");
-
-
-const studentName = document.getElementById("studentName");
-
-const school = document.getElementById("school");
-
-const grade = document.getElementById("grade");
-
-const parentName = document.getElementById("parentName");
-
-const phone = document.getElementById("phone");
-
-const email = document.getElementById("email");
-
-const pickup = document.getElementById("pickup");
-
-const destination = document.getElementById("destination");
-
-const district = document.getElementById("district");
-
-const notes = document.getElementById("notes");
 
 
 form.addEventListener("submit", async (e) => {
@@ -121,61 +94,90 @@ form.addEventListener("submit", async (e) => {
 
     button.textContent = "Submitting...";
 
-    message.textContent = "Connecting to Firebase...";
-
 
     try {
 
-    message.textContent = "Step 1: Connecting to Firebase...";
-
-    if (!auth.currentUser) {
-        message.textContent = "Step 2: Signing in anonymously...";
-
+        // Sign in anonymously
         await signInAnonymously(auth);
-    }
 
-    message.textContent = "Step 3: Preparing booking...";
 
-    const booking = {
-        studentName: studentName.value.trim(),
-        school: school.value.trim(),
-        grade: grade.value.trim(),
-        parentName: parentName.value.trim(),
-        phone: phone.value.trim(),
-        email: email.value.trim(),
-        pickup: pickup.value.trim(),
-        destination: destination.value.trim(),
-        district: district.value,
-        notes: notes.value.trim(),
-        status: "Pending",
-        createdAt: serverTimestamp()
-    };
+        // Read form values explicitly
+        const booking = {
 
-    message.textContent = "Step 4: Saving to Firestore...";
+            studentName:
+                document.getElementById("studentName").value.trim(),
 
-    await addDoc(
-        collection(db, "bookings"),
-        booking
-    );
+            school:
+                document.getElementById("school").value.trim(),
 
-    message.textContent =
-        "SUCCESS! Booking saved.";
+            grade:
+                document.getElementById("grade").value.trim(),
 
-    form.reset();
+            parentName:
+                document.getElementById("parentName").value.trim(),
 
-} catch (error) {
+            phone:
+                document.getElementById("phone").value.trim(),
 
-    console.error(error);
+            email:
+                document.getElementById("email").value.trim(),
 
-    message.textContent =
-        "ERROR: " + error.code + " - " + error.message;
+            pickup:
+                document.getElementById("pickup").value.trim(),
 
-} finally {
+            destination:
+                document.getElementById("destination").value.trim(),
 
-    button.disabled = false;
-    button.textContent = "Submit Booking";
+            district:
+                document.getElementById("district").value,
 
-}
+            notes:
+                document.getElementById("notes").value.trim(),
+
+            status: "Pending",
+
+            createdAt: serverTimestamp()
+
+        };
+
+
+        // Save to Firestore
+        const docRef = await addDoc(
+            collection(db, "bookings"),
+            booking
+        );
+
+
+        message.textContent =
+            "Booking submitted successfully!";
+
+        message.className = "success";
+
+        console.log(
+            "BOOKING SAVED:",
+            docRef.id
+        );
+
+
+        form.reset();
+
+
+    } catch (error) {
+
+        console.error(
+            "FIREBASE BOOKING ERROR:",
+            error
+        );
+
+
+        // IMPORTANT: show the actual Firebase error
+        message.textContent =
+            "Firebase error: " + error.message;
+
+        message.className = "error";
+
+
+    } finally {
 
         button.disabled = false;
 
@@ -186,5 +188,6 @@ form.addEventListener("submit", async (e) => {
 });
 
 </script>
+
 </body>
 </html>
