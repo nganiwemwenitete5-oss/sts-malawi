@@ -244,12 +244,13 @@ Submit Booking
 import { initializeApp }
 from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
 
-
 import {
-    getAuth,
-    signInAnonymously
-}
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    initializeFirestore,
+    collection,
+    addDoc,
+    serverTimestamp
+} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+
 
 
 import {
