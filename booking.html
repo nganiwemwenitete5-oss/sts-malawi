@@ -1,190 +1,276 @@
-THIS IS A TEST
-<html lang="en">
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport"
+content="width=device-width, initial-scale=1.0">
 
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<title>STS Malawi - Student Booking</title>
-
-<style>
+<title>STS Malawi - Book Student Transport</title><style>
 
 * {
     box-sizing: border-box;
 }
 
 body {
+    margin: 0;
     font-family: Arial, sans-serif;
     background: #f4f7fb;
-    margin: 0;
     color: #222;
 }
 
 header {
     background: #0b5ed7;
     color: white;
-    padding: 20px;
+    padding: 25px 20px;
     text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 32px;
+}
+
+header p {
+    margin: 8px 0 0;
+}
+
+nav {
+    background: white;
+    padding: 15px;
+    text-align: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,.1);
+}
+
+nav a {
+    color: #0b5ed7;
+    text-decoration: none;
+    font-weight: bold;
+    margin: 0 12px;
 }
 
 .container {
     max-width: 700px;
-    margin: 30px auto;
-    background: white;
+    margin: 35px auto;
     padding: 25px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0,0,0,.15);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 2px 12px rgba(0,0,0,.1);
+}
+
+h2 {
+    color: #0b5ed7;
+    margin-top: 0;
+}
+
+.intro {
+    color: #555;
+    line-height: 1.5;
+}
+
+label {
+    display: block;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    font-weight: bold;
 }
 
 input,
 select,
 textarea {
     width: 100%;
-    padding: 12px;
-    margin: 8px 0;
+    padding: 13px;
     border: 1px solid #ccc;
-    border-radius: 6px;
+    border-radius: 7px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+}
+
+textarea {
+    resize: vertical;
 }
 
 button {
     width: 100%;
+    margin-top: 25px;
+    padding: 15px;
     background: #0b5ed7;
     color: white;
-    padding: 15px;
-    border: 0;
-    border-radius: 6px;
-    font-size: 16px;
+    border: none;
+    border-radius: 7px;
+    font-size: 17px;
+    font-weight: bold;
     cursor: pointer;
 }
 
-button:disabled {
-    background: #8aaee8;
+button:hover {
+    background: #084298;
 }
 
-.small {
-    font-size: 13px;
-    color: #666;
+.required {
+    color: #d00;
 }
 
-#message {
-    margin-top: 15px;
+.note {
+    margin-top: 18px;
     padding: 12px;
-    border-radius: 6px;
-    display: none;
+    background: #eef5ff;
+    border-radius: 7px;
+    color: #444;
+    font-size: 14px;
 }
 
-.success {
-    background: #d1e7dd;
-    color: #0f5132;
+footer {
+    background: #222;
+    color: white;
+    text-align: center;
+    padding: 25px;
+    margin-top: 40px;
 }
 
-.error {
-    background: #f8d7da;
-    color: #842029;
+@media (max-width: 600px) {
+
+    header h1 {
+        font-size: 27px;
+    }
+
+    .container {
+        margin: 20px 12px;
+        padding: 20px;
+    }
+
+    nav a {
+        display: inline-block;
+        margin: 6px;
+    }
+
 }
 
-.info {
-    background: #cff4fc;
-    color: #055160;
-}
+</style></head><body><header><h1>STS Malawi</h1><p>Student Transport Services</p></header><nav><a href="index.html">Home</a>
 
-</style>
+<a href="booking.html">Book Transport</a>
 
-</head>
+</nav><div class="container"><h2>Book Student Transport</h2><p class="intro">
+Complete the form below. Your transport request will be
+sent directly to STS Malawi.
+</p><form
+action="https://formsubmit.co/nganiwemwenitete5@gmail.com"
+method="POST"
+><!-- Email settings --><input
+type="hidden"
+name="_subject"
+value="New STS Malawi Student Transport Booking"
 
-<body>
-
-<header>
-
-<h1>STS Malawi</h1>
-
-<p>Student Transport Booking</p>
-
-</header>
-
-
-<div class="container">
-
-<h2>Book Student Transport</h2>
-
-<p class="small">
-Complete the form below. Your booking will be sent securely to STS Malawi.
-</p>
-
-
-<form id="bookingForm">
-
+«»
 
 <input
-    type="text"
-    id="studentName"
-    placeholder="Student Name"
-    required
->
+type="hidden"
+name="_template"
+value="table"
 
-
-<input
-    type="text"
-    id="school"
-    placeholder="School Name"
-    required
->
-
+«»
 
 <input
-    type="text"
-    id="grade"
-    placeholder="Grade / Class"
-    required
->
+type="hidden"
+name="_captcha"
+value="true"
 
+«»
 
-<input
-    type="text"
-    id="parentName"
-    placeholder="Parent / Guardian Name"
-    required
->
+<label for="studentName">
+Student Name <span class="required">*</span>
+</label><input
+type="text"
+id="studentName"
+name="Student Name"
+placeholder="Enter student name"
+required
 
+«»
 
-<input
-    type="tel"
-    id="phone"
-    placeholder="Phone Number"
-    required
->
+<label for="school">
+School Name <span class="required">*</span>
+</label><input
+type="text"
+id="school"
+name="School"
+placeholder="Enter school name"
+required
 
+«»
 
-<input
-    type="email"
-    id="email"
-    placeholder="Email Address"
->
+<label for="grade">
+Grade / Class <span class="required">*</span>
+</label><input
+type="text"
+id="grade"
+name="Grade"
+placeholder="Example: Year 1"
+required
 
+«»
 
-<input
-    type="text"
-    id="pickup"
-    placeholder="Pickup Location"
-    required
->
+<label for="parentName">
+Parent / Guardian Name <span class="required">*</span>
+</label><input
+type="text"
+id="parentName"
+name="Parent / Guardian Name"
+placeholder="Enter parent or guardian name"
+required
 
+«»
 
-<input
-    type="text"
-    id="destination"
-    placeholder="Destination"
-    required
->
+<label for="phone">
+Phone Number <span class="required">*</span>
+</label><input
+type="tel"
+id="phone"
+name="Phone Number"
+placeholder="Example: 0988888888"
+required
 
+«»
 
-<select id="district" required>
+<label for="email">
+Parent Email Address
+</label><input
+type="email"
+id="email"
+name="Parent Email"
+placeholder="Enter email address"
+
+«»
+
+<label for="pickup">
+Pickup Location <span class="required">*</span>
+</label><input
+type="text"
+id="pickup"
+name="Pickup Location"
+placeholder="Where should the student be picked up?"
+required
+
+«»
+
+<label for="destination">
+Destination <span class="required">*</span>
+</label><input
+type="text"
+id="destination"
+name="Destination"
+placeholder="School or destination"
+required
+
+«»
+
+<label for="district">
+District <span class="required">*</span>
+</label><select
+id="district"
+name="District"
+required
+
+«»
 
 <option value="">
 Select District
-</option>
-
-<option>Balaka</option>
+</option><option>Balaka</option>
 <option>Blantyre</option>
 <option>Chikwawa</option>
 <option>Chiradzulu</option>
@@ -211,289 +297,19 @@ Select District
 <option>Rumphi</option>
 <option>Salima</option>
 <option>Thyolo</option>
-<option>Zomba</option>
-
-</select>
-
-
-<textarea
-    id="notes"
-    rows="4"
-    placeholder="Additional information (optional)"
-></textarea>
-
-
-<button
-    type="submit"
-    id="submitBtn"
->
-Submit Booking
-</button>
-
-
-<div id="message"></div>
-
-
-</form>
-
-</div>
-
-
-<script type="module">
-
-import { initializeApp }
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-
-import {
-    initializeFirestore,
-    collection,
-    addDoc,
-    serverTimestamp
-} from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
-
-
-import {
-    initializeFirestore,
-    collection,
-    addDoc,
-    serverTimestamp
-}
-from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
-
-
-const firebaseConfig = {
-
-    apiKey:
-        "AIzaSyApfHHFX91RMVeQV-gb2xuutZ828Z-emeI",
-
-    authDomain:
-        "student-transport-services.firebaseapp.com",
-
-    projectId:
-        "student-transport-services",
-
-    storageBucket:
-        "student-transport-services.firebasestorage.app",
-
-    messagingSenderId:
-        "723755585577",
-
-    appId:
-        "1:723755585577:web:8428a99cfd50d1586b0c38",
-
-    measurementId:
-        "G-1R7Q3GGH0K"
-
-};
-
-
-const app = initializeApp(firebaseConfig);
-
-
-const auth = getAuth(app);
-
-
-const db = initializeFirestore(app, {
-    experimentalForceLongPolling: true
-});
-
-
-const form =
-    document.getElementById("bookingForm");
-
-
-const button =
-    document.getElementById("submitBtn");
-
-
-const message =
-    document.getElementById("message");
-
-
-function showMessage(text, type) {
-
-    message.textContent = text;
-
-    message.className = type;
-
-    message.style.display = "block";
-
-}
-
-
-form.addEventListener("submit", async (event) => {
-
-    event.preventDefault();
-
-
-    button.disabled = true;
-
-    button.textContent = "Submitting...";
-
-
-    try {
-
-        showMessage(
-            "Connecting to Firebase...",
-            "info"
-        );
-
-
-        /*
-         * Sign in anonymously
-         */
-
-        if (!auth.currentUser) {
-
-            await signInAnonymously(auth);
-
-        }
-
-
-        showMessage(
-            "Saving your booking...",
-            "info"
-        );
-
-
-        /*
-         * Collect booking information
-         */
-
-        const booking = {
-
-            studentName:
-                document
-                .getElementById("studentName")
-                .value
-                .trim(),
-
-            school:
-                document
-                .getElementById("school")
-                .value
-                .trim(),
-
-            grade:
-                document
-                .getElementById("grade")
-                .value
-                .trim(),
-
-            parentName:
-                document
-                .getElementById("parentName")
-                .value
-                .trim(),
-
-            phone:
-                document
-                .getElementById("phone")
-                .value
-                .trim(),
-
-            email:
-                document
-                .getElementById("email")
-                .value
-                .trim(),
-
-            pickup:
-                document
-                .getElementById("pickup")
-                .value
-                .trim(),
-
-            destination:
-                document
-                .getElementById("destination")
-                .value
-                .trim(),
-
-            district:
-                document
-                .getElementById("district")
-                .value,
-
-            notes:
-                document
-                .getElementById("notes")
-                .value
-                .trim(),
-
-            status:
-                "Pending",
-
-            createdAt:
-                serverTimestamp()
-
-        };
-
-
-        /*
-         * Save booking to Firestore
-         *
-         * Collection name:
-         * bookings
-         */
-
-        const docRef =
-            await addDoc(
-                collection(db, "bookings"),
-                booking
-            );
-
-
-        console.log(
-            "BOOKING SAVED:",
-            docRef.id
-        );
-
-
-        showMessage(
-            "Booking submitted successfully! STS Malawi will contact you.",
-            "success"
-        );
-
-
-        form.reset();
-
-
-    }
-
-    catch (error) {
-
-        console.error(
-            "FIREBASE BOOKING ERROR:",
-            error
-        );
-
-
-        showMessage(
-            "Firebase error: " +
-            (error.code || "") +
-            " - " +
-            error.message,
-            "error"
-        );
-
-    }
-
-
-    finally {
-
-        button.disabled = false;
-
-        button.textContent =
-            "Submit Booking";
-
-    }
-
-});
-
-</script>
-
-</body>
-
-</html>
+<option>Zomba</option></select><label for="notes">
+Additional Information
+</label><textarea
+id="notes"
+name="Additional Information"
+rows="5"
+placeholder="Any additional information about the student's transport needs"
+></textarea><button type="submit">
+Submit Transport Booking
+</button><div class="note"><strong>Important:</strong>
+After your first test submission, check
+<strong>nganiwemwenitete5@gmail.com</strong>
+for an email from FormSubmit asking you to
+confirm/activate the form.
+
+</div></form></div><footer><p>© 2026 STS Malawi - Student Transport Services</p><p>Student transport made simple.</p></footer></body></html>
